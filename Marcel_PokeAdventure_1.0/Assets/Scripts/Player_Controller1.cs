@@ -10,10 +10,13 @@ public class Player_Controller1 : MonoBehaviour
     float horizontal = 0;
     float vertical = 0;
     float Match20 = 15.00f;
+    Rigidbody2D PlayerRB2D;
 
     // Start is called before the first frame update
     void Start()
     {
+
+        PlayerRB2D = GetComponent<Rigidbody2D>();
 
     }
 
@@ -27,8 +30,8 @@ public class Player_Controller1 : MonoBehaviour
         pos = transform.position;
         pos.x = pos.x + Match20 * horizontal * Time.deltaTime;
         pos.y = pos.y + Match20 * vertical * Time.deltaTime;
-        transform.position = pos;
-
+        //transform.position = pos;
+        PlayerRB2D.MovePosition(pos);       
         
         //Debug.Log("Horizontal" + horizontal);
         //Debug.Log("Vertical" + vertical);
