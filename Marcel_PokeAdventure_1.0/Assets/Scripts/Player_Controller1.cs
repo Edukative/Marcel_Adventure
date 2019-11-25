@@ -7,16 +7,20 @@ public class Player_Controller1 : MonoBehaviour
     // Start is called before the first frame update
 
     Vector2 pos = Vector2.zero;
-    float horizontal = 0;
-    float vertical = 0;
-    float Match20 = 15.00f;
+    public float horizontal = 0;
+    public float vertical = 0;
+    public float Match20 = 15.00f;
     Rigidbody2D PlayerRB2D;
+
+    public int HealthPoints;
+    public int MaxHP = 100;
 
     // Start is called before the first frame update
     void Start()
     {
 
         PlayerRB2D = GetComponent<Rigidbody2D>();
+        HealthPoints = MaxHP;
 
     }
 
@@ -43,4 +47,17 @@ public class Player_Controller1 : MonoBehaviour
 
 
     }
+
+
+    public void ChangeHealth(int amount)
+    {
+
+        HealthPoints = Mathf.Clamp(HealthPoints + amount, 0, MaxHP);
+        Debug.Log(HealthPoints + "/" + MaxHP);
+
+
+    }
+
+
+
 }
