@@ -15,10 +15,14 @@ public class HealthControl : MonoBehaviour
         if (controller != null)
         {
 
-            controller.ChangeHealth(1);
+            if (controller.HealthPoints < controller.MaxHP)
+            {
 
-            Destroy(gameObject);
+                controller.ChangeHealth(35);
 
+                Destroy(gameObject);
+
+            }
         }
 
 

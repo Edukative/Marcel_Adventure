@@ -12,7 +12,7 @@ public class Player_Controller1 : MonoBehaviour
     public float Match20 = 15.00f;
     Rigidbody2D PlayerRB2D;
 
-    public int HealthPoints;
+    public int HealthPoints = 100;
     public int MaxHP = 100;
 
     // Start is called before the first frame update
@@ -21,6 +21,8 @@ public class Player_Controller1 : MonoBehaviour
 
         PlayerRB2D = GetComponent<Rigidbody2D>();
         HealthPoints = MaxHP;
+
+        //HealthPoints = 1;
 
     }
 
@@ -35,14 +37,12 @@ public class Player_Controller1 : MonoBehaviour
         pos.x = pos.x + Match20 * horizontal * Time.deltaTime;
         pos.y = pos.y + Match20 * vertical * Time.deltaTime;
         //transform.position = pos;
-        PlayerRB2D.MovePosition(pos);       
-        
+        PlayerRB2D.MovePosition(pos);
+
         //Debug.Log("Horizontal" + horizontal);
         //Debug.Log("Vertical" + vertical);
 
-
-
-
+        Debug.Log(HealthPoints + "/" + MaxHP);
 
 
 
