@@ -13,6 +13,13 @@ public class Enemy_controller : MonoBehaviour
     int direction = 1;
     public float changeTimer = 3.0f;
 
+    public Vector2[] localNodes;
+
+    int currentnode;
+    int NextNode;
+    Vector2 Velocity;
+
+    
 
 
     // Start is called before the first frame update
@@ -22,6 +29,21 @@ public class Enemy_controller : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         timer = changeTimer;
 
+        localNodes = new Vector2[transform.childCount];
+
+        for(int i = 0; i <= transform.childCount - 1; i++)
+        {
+
+
+            Transform child = transform.GetChild(i).transform;
+            localNodes[i] = child.transform.position;
+            Debug.Log("Index = " + i + "  Transform" + localNodes[i]);
+
+        }
+
+        currentnode = 0;
+        NextNode = 1;
+
 
     }
 
@@ -29,16 +51,19 @@ public class Enemy_controller : MonoBehaviour
     void Update()
     {
 
-        timer += -Time.deltaTime;
+        /*timer += -Time.deltaTime;
         if(timer < 0)
         {
 
             direction = -direction;
             timer = changeTimer;
 
-        }
+        }*/
 
-        Vector2 position = rb2d.position;
+        Vector2 wayPointDir = localNodes[NextNode] - rb2d.position;
+        float dist = speed * Time.deltaTime;
+
+        /*Vector2 position = rb2d.position;
 
         if (isVertical)
         {
@@ -52,9 +77,24 @@ public class Enemy_controller : MonoBehaviour
             position.x += Time.deltaTime * speed * direction;
 
         }
+        */
+
+        if(wayPointDir.sqrMagnitude < dist * dist)
+        {
+
+            dist = wayPointDir.magnitude;
+            currentnode = NextNode += 1;
+            if(NextNode >= localNodes.Length)
+            {
+
+                NextNode = 0;
+
+            }
+
+        }
 
         rb2d.MovePosition(position);
-
+        
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -73,3 +113,8 @@ public class Enemy_controller : MonoBehaviour
     }
 
 }
+
+
+/*
+ 
+     */

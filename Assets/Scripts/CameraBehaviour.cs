@@ -39,13 +39,15 @@ public class CameraBehaviour : MonoBehaviour
         if(Mathf.Approximately(RUBY.Match20 * RUBY.horizontal, 0.0f) && Mathf.Approximately(RUBY.Match20 * RUBY.vertical, 0.0f))
         {
 
-            moving += -0.02f;
+            //moving += -0.02f;
+            moving = Mathf.Lerp(moving, 0, 0.13f);
 
         }
         else
         {
 
-            moving += 0.02f;
+            //moving += 0.02f;
+            moving = Mathf.Lerp(moving, 1, 0.13f);
 
         }
 
