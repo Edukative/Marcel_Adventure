@@ -5,7 +5,9 @@ using UnityEngine;
 public class Enemy_controller : MonoBehaviour
 {
 
-    public float speed;
+    public GameObject wayPoints;
+
+    float speed = 5;
     Rigidbody2D rb2d;
     bool isVertical;
 
@@ -18,6 +20,7 @@ public class Enemy_controller : MonoBehaviour
     int currentnode;
     int NextNode;
     Vector2 Velocity;
+    Animator anim;
 
     
 
@@ -28,15 +31,20 @@ public class Enemy_controller : MonoBehaviour
 
         rb2d = GetComponent<Rigidbody2D>();
         timer = changeTimer;
+        anim = GetComponent<Animator>();
 
         localNodes = new Vector2[transform.childCount];
 
-        for(int i = 0; i <= transform.childCount - 1; i++)
+        localNodes = new Vector2[wayPoints.transform.childCount];
+
+        for(int i = 0; i <= wayPoints.transform.childCount - 1; i++)
         {
 
 
-            Transform child = transform.GetChild(i).transform;
-            localNodes[i] = child.transform.position;
+            Transform child = wayPoints.transform.GetChild(i).transform;
+            //localNodes[i] = child.transform.position;
+            localNodes[i] = new Vector2(child.transform.position.x, child.transform.position.y);
+
             Debug.Log("Index = " + i + "  Transform" + localNodes[i]);
 
         }
@@ -60,11 +68,42 @@ public class Enemy_controller : MonoBehaviour
 
         }*/
 
+
         Vector2 wayPointDir = localNodes[NextNode] - rb2d.position;
+        Vector2 position = rb2d.position;
         float dist = speed * Time.deltaTime;
+        UpdateAnimations(wayPointDir);
 
-        /*Vector2 position = rb2d.position;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
 
+            Debug.Log("Magnitude" + wayPointDir.magnitude);
+            Debug.Log("SqrMagnitude" + wayPointDir.sqrMagnitude);
+            Debug.Log("Normalized" + wayPointDir.normalized);
+
+        }
+
+        if(wayPointDir.sqrMagnitude < dist * dist)
+        {
+
+            dist = wayPointDir.magnitude;
+            currentnode = NextNode;
+            NextNode += 1;
+
+            if(NextNode >= localNodes.Length)
+            {
+
+                NextNode = 0;
+
+            }
+
+        }
+
+        Velocity = wayPointDir.normalized * dist;
+
+
+        
+        /*
         if (isVertical)
         {
 
@@ -79,21 +118,9 @@ public class Enemy_controller : MonoBehaviour
         }
         */
 
-        if(wayPointDir.sqrMagnitude < dist * dist)
-        {
+        
 
-            dist = wayPointDir.magnitude;
-            currentnode = NextNode += 1;
-            if(NextNode >= localNodes.Length)
-            {
-
-                NextNode = 0;
-
-            }
-
-        }
-
-        rb2d.MovePosition(position);
+        rb2d.MovePosition(position + Velocity);
         
     }
 
@@ -111,6 +138,15 @@ public class Enemy_controller : MonoBehaviour
 
 
     }
+
+    void UpdateAnimations(Vector2 d)
+    {
+
+        this.GetComponent<Animator>().SetFloat("MoveX", d.x);
+        this.GetComponent<Animator>().SetFloat("MoveY", d.y);
+
+    }
+
 
 }
 

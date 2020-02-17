@@ -46,7 +46,7 @@ public class Player_Controller1 : MonoBehaviour
         //Debug.Log("Horizontal" + horizontal);
         //Debug.Log("Vertical" + vertical);
 
-        Debug.Log(HealthPoints + "/" + MaxHP);
+        //Debug.Log(HealthPoints + "/" + MaxHP);
 
 
 
